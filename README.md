@@ -1,4 +1,4 @@
-# Binance Futures Trading Bot - ICU Guardian (BoltDev)
+# Binance Futures Trading Bot 
 
 ## Project Overview
 A professional Python-based automated trading system for Binance Futures. This bot handles basic and advanced order types with integrated security, robust input validation, and server-time synchronization.
