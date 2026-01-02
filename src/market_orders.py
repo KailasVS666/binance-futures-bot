@@ -21,6 +21,11 @@ def place_market_order(symbol, side, quantity):
     api_key = os.getenv('BINANCE_API_KEY')
     api_secret = os.getenv('BINANCE_API_SECRET')
     client = Client(api_key, api_secret, testnet=True)
+    
+    # Synchronize Time (Fixes -1021)
+    import time
+    server_time = client.get_server_time()
+    client.timestamp_offset = server_time['serverTime'] - int(time.time() * 1000)
 
     try:
         logger.info(f"Attempting {side} Market Order: {quantity} {symbol}")

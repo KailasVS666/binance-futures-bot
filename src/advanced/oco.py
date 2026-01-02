@@ -1,4 +1,5 @@
 import os
+import time
 import argparse
 from dotenv import load_dotenv
 from binance.client import Client
@@ -8,13 +9,13 @@ load_dotenv()
 logger = get_logger("OCO")
 
 def place_oco(symbol, quantity, tp_price, sl_price):
-    """
-    Simulates OCO by placing a Take Profit Market and a Stop Market order.
-    These orders will close an existing position.
-    """
+    # 1. Initialize Client without invalid keyword arguments
     client = Client(os.getenv('BINANCE_API_KEY'), os.getenv('BINANCE_API_SECRET'), testnet=True)
-
+    
     try:
+        # 2. Synchronize Time (Fixes -1021)
+        server_time = client.get_server_time()
+        client.timestamp_offset = server_time['serverTime'] - int(time.time() * 1000)
         logger.info(f"Setting OCO for {symbol}: TP @ {tp_price}, SL @ {sl_price}")
 
         # 1. Take Profit Market Order

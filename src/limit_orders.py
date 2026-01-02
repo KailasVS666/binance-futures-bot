@@ -19,6 +19,11 @@ def place_limit_order(symbol, side, quantity, price):
 
     # 3. Initialize Client
     client = Client(os.getenv('BINANCE_API_KEY'), os.getenv('BINANCE_API_SECRET'), testnet=True)
+    
+    # Synchronize Time (Fixes -1021)
+    import time
+    server_time = client.get_server_time()
+    client.timestamp_offset = server_time['serverTime'] - int(time.time() * 1000)
 
     try:
         logger.info(f"Placing {side} Limit Order: {quantity} {symbol} at {price}")
