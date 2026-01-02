@@ -16,7 +16,7 @@ def get_logger(module_name):
         formatter = logging.Formatter('%(asctime)s - %(name)s - %(levelname)s - %(message)s')
 
         # 1. File Handler: Writes to 'bot.log' in the project root
-        file_handler = logging.FileHandler('bot.log')
+        file_handler = logging.FileHandler('bot.log', encoding='utf-8')
         file_handler.setFormatter(formatter)
         logger.addHandler(file_handler)
 
